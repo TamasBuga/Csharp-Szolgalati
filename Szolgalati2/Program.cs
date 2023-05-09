@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using NanoXLSX;
 using NanoXLSX.Styles;
@@ -16,11 +14,13 @@ namespace Szolgalati2
 
 
         public static int EmployersCount = 25;
+        public static int Year = 2023;
         public static int Month = 5;
         public static int Day = 8;
+        public static string Shift = "7-19";
         public static List<Employer> Employers = GetEmployers();
         public static List<string> ServicePhones = GetServicePhones();
-        public static List<string> EmployersOfTheDay = GetEmployersOfTheDay("5", "19-7");
+        public static List<string> EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
 
 
 
@@ -33,12 +33,15 @@ namespace Szolgalati2
 
             // DisplayEmployersOfTheDay();
 
-            ReadXLSX();
+            CreateServiceSheets();
+            Console.WriteLine("Files are created!");
 
 
             Console.ReadKey();
 
         }
+
+
 
 
 
@@ -49,7 +52,33 @@ namespace Szolgalati2
 
         // =====================================================================
 
-        public static void ReadXLSX()
+
+
+        public static void CreateServiceSheets()
+        {
+            int monthLeght = DateTime.DaysInMonth(Year, Month);
+
+            for (int i = 0; i < monthLeght; i++)
+            {
+                // At Day
+                Day = i + 1;
+                Shift = "7-19";
+                ServicePhones = GetServicePhones();
+                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
+                CreateXLSX(i + 1);
+
+                // At Night
+                Day = i + 1;
+                Shift = "19-7";
+                ServicePhones = GetServicePhones();
+                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
+                CreateXLSX(i + 2);
+            }
+        }
+
+
+
+        public static void CreateXLSX(int index)
         {
             Workbook wb = Workbook.Load("szolgalatilap.xlsx");
             // Console.WriteLine(wb.CurrentWorksheet.SheetName);
@@ -149,7 +178,8 @@ namespace Szolgalati2
             // Ambulancia: (1, 7-12) (4, 7-12) (1, 24-29) (4, 24-29)
             // fekteto: (1, 14-15) (4, 14-15) (1, 31-32) (4, 31-32)
 
-            wb.SaveAs("demo3.xlsx");
+            wb.SaveAs("szolglap" + index + ".xlsx");
+
         }
 
 
@@ -169,7 +199,8 @@ namespace Szolgalati2
 
         public static string FormatName(string name)
         {
-            string[] empName = name.Split(' ');
+            char[] trimChars = { ' ', '-' };
+            string[] empName = name.Split(trimChars);
             string result = "";
             for(int i = 0; i < empName.Length; i++)
             {
@@ -181,6 +212,9 @@ namespace Szolgalati2
             }
             return result;
         }
+
+
+
 
 
 
