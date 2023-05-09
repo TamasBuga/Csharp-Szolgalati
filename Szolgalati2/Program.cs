@@ -60,25 +60,31 @@ namespace Szolgalati2
 
             for (int i = 0; i < monthLeght; i++)
             {
+                Day = (i + 1);
+
                 // At Day
-                Day = i + 1;
-                Shift = "7-19";
                 ServicePhones = GetServicePhones();
-                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
-                CreateXLSX(i + 1);
+                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), "7-19");
+                CreateXLSX((i + 1).ToString() + "Nappal");
+                Console.WriteLine("7-19 Done");
+
+            }
+
+            for (int i = 0; i < monthLeght; i++)
+            {
+                Day = (i + 1);
 
                 // At Night
-                Day = i + 1;
-                Shift = "19-7";
                 ServicePhones = GetServicePhones();
-                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
-                CreateXLSX(i + 2);
+                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), "19-7");
+                CreateXLSX((i + 1).ToString() + "Ejszaka");
+                Console.WriteLine("19-7 Done");
             }
         }
 
 
 
-        public static void CreateXLSX(int index)
+        public static void CreateXLSX(string fileName)
         {
             Workbook wb = Workbook.Load("szolgalatilap.xlsx");
             // Console.WriteLine(wb.CurrentWorksheet.SheetName);
@@ -178,7 +184,7 @@ namespace Szolgalati2
             // Ambulancia: (1, 7-12) (4, 7-12) (1, 24-29) (4, 24-29)
             // fekteto: (1, 14-15) (4, 14-15) (1, 31-32) (4, 31-32)
 
-            wb.SaveAs("szolglap" + index + ".xlsx");
+            wb.SaveAs("szolglap" + fileName + ".xlsx");
 
         }
 
