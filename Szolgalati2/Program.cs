@@ -35,6 +35,7 @@ namespace Szolgalati2
 
             ReadXLSX();
 
+
             Console.ReadKey();
 
         }
@@ -75,7 +76,7 @@ namespace Szolgalati2
             {
                 
                 string[] emp = EmployersOfTheDay.ElementAt(i).Split(';');
-                string empName = emp[0];
+                string empName = FormatName(emp[0]);
                 string empPhone = emp[1];
                 string empShift = emp[2];
 
@@ -164,6 +165,22 @@ namespace Szolgalati2
             }
         }
 
+
+
+        public static string FormatName(string name)
+        {
+            string[] empName = name.Split(' ');
+            string result = "";
+            for(int i = 0; i < empName.Length; i++)
+            {
+                result += char.ToUpper(empName[i][0]) + empName[i].Substring(1).ToLower();
+                if(i < empName.Length - 1)
+                {
+                    result += " ";
+                }
+            }
+            return result;
+        }
 
 
 
