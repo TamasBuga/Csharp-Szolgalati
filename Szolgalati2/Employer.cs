@@ -10,7 +10,7 @@ namespace Szolgalati2
     {
         public string FirstName;
         public string LastName;
-        public string Phone;
+        public string Phone { get; set; }
         public Dictionary<string, string> WorkDays;
 
         public Employer(string FirstName, string LastName, string Phone, Dictionary<string, string> WorkDays)
