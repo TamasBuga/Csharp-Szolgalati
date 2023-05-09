@@ -167,25 +167,10 @@ namespace Szolgalati2
                     ambIndex++;
                 }
 
-                // Console.WriteLine(empName + " " + empPhone + " " + empShift
             }
 
-
-            // datum: (1, 0), (4, 0), (1, 17), (4, 17)
-
-
-            // nevek:
-            // szolgalatvezeto: (0, 3) (3, 3) (0, 20) (3, 20)
-            // Ambulancia: (0, 7-12) (3, 7-12) (0, 24-29) (3, 24-29)
-            // fekteto: (0, 14-15) (3, 14-15) (0, 31-32) (3, 31-32)
-
-            // telefonok:
-            // szolgalatvezeto: (1, 3) (4, 3) (1, 20) (4, 20)
-            // Ambulancia: (1, 7-12) (4, 7-12) (1, 24-29) (4, 24-29)
-            // fekteto: (1, 14-15) (4, 14-15) (1, 31-32) (4, 31-32)
-
             wb.SaveAs("szolglap" + fileName + ".xlsx");
-
+            
         }
 
 
