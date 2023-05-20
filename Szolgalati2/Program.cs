@@ -16,7 +16,6 @@ namespace Szolgalati2
         public static int EmployersCount = 25;
         public static int Year = 2023;
         public static int Month = 5;
-        public static int Day = 8;
         public static string Shift = "7-19";
         public static List<Employer> Employers = GetEmployers();
         public static List<string> ServicePhones = GetServicePhones();
@@ -33,8 +32,7 @@ namespace Szolgalati2
 
             // DisplayEmployersOfTheDay();
 
-            CreateServiceSheets();
-            Console.WriteLine("Files are created!");
+            CreateServiceSheets(21, 2);
 
 
             Console.ReadKey();
@@ -53,32 +51,47 @@ namespace Szolgalati2
         // =====================================================================
 
 
+        public static void PrintView(int page, int day, string shift, string fileName)
+        {
+            for(int i = 0; i < page; i++)
+            {
+                ServicePhones = GetServicePhones();
+                EmployersOfTheDay = GetEmployersOfTheDay(day.ToString(), shift);
+                CreateXLSX(fileName);
+                Console.WriteLine("File Created {0}", fileName);
+            }
+        }
 
-        public static void CreateServiceSheets()
+
+        public static void CreateServiceSheets(int startDay, int printPage)
         {
             int monthLeght = DateTime.DaysInMonth(Year, Month);
+            int day = 0;
+            string shift = "";
+            string month = "05.";
+            string fileName = "";
 
-            for (int i = 0; i < monthLeght; i++)
+            startDay--;
+
+            for (int i = startDay; i < monthLeght; i++)
             {
-                Day = (i + 1);
+                day = (i + 1);
+                shift = "7-19";
+                fileName = "szolg_" + month + day + "." + shift;
 
                 // At Day
-                ServicePhones = GetServicePhones();
-                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), "7-19");
-                CreateXLSX((i + 1).ToString() + "Nappal");
-                Console.WriteLine("7-19 Done");
+                PrintView(printPage, day, shift, fileName);
 
             }
 
-            for (int i = 0; i < monthLeght; i++)
+            for (int i = startDay; i < monthLeght; i++)
             {
-                Day = (i + 1);
+                day = (i + 1);
+                shift = "19-7";
+                fileName = "szolg_" + month + day + "." + shift;
 
                 // At Night
-                ServicePhones = GetServicePhones();
-                EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), "19-7");
-                CreateXLSX((i + 1).ToString() + "Ejszaka");
-                Console.WriteLine("19-7 Done");
+                PrintView(printPage, day, shift, fileName);
             }
         }
 
@@ -379,7 +392,7 @@ namespace Szolgalati2
             }
             catch (IOException e)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(e.Message);
             }
 
             reader.Close();
