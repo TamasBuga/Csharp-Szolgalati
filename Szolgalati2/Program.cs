@@ -14,9 +14,6 @@ namespace Szolgalati2
 
 
         public static int EmployersCount = 25;
-        public static int Year = 2023;
-        public static int Month = 5;
-        public static string Shift = "7-19";
         public static List<Employer> Employers = GetEmployers();
         public static List<string> ServicePhones = GetServicePhones();
         public static List<string> EmployersOfTheDay = new List<string>();
@@ -32,7 +29,7 @@ namespace Szolgalati2
 
             // DisplayEmployersOfTheDay();
 
-            CreateServiceSheets(21, 2);
+            CreateServiceSheets(21, 5, 2);
 
 
             Console.ReadKey();
@@ -51,21 +48,21 @@ namespace Szolgalati2
         // =====================================================================
 
 
-        public static void PrintView(int page, int day, string shift, string fileName)
+        public static void PrintView(int page, int month, int day, string shift, string fileName)
         {
             for(int i = 0; i < page; i++)
             {
                 ServicePhones = GetServicePhones();
                 EmployersOfTheDay = GetEmployersOfTheDay(day.ToString(), shift);
-                CreateXLSX(fileName, day);
+                CreateXLSX(fileName, month, day);
                 Console.WriteLine("File Created {0}", fileName);
             }
         }
 
 
-        public static void CreateServiceSheets(int startDay, int printPage)
+        public static void CreateServiceSheets(int startDay, int currentMonth, int printPage)
         {
-            int monthLeght = DateTime.DaysInMonth(Year, Month);
+            int monthLeght = DateTime.DaysInMonth(2023, 5);
             int day = 0;
             string shift = "";
             string month = "05.";
@@ -80,7 +77,7 @@ namespace Szolgalati2
                 fileName = "szolg_" + month + day + "." + shift;
 
                 // At Day
-                PrintView(printPage, day, shift, fileName);
+                PrintView(printPage, currentMonth, day, shift, fileName);
 
             }
 
@@ -91,13 +88,13 @@ namespace Szolgalati2
                 fileName = "szolg_" + month + day + "." + shift;
 
                 // At Night
-                PrintView(printPage, day, shift, fileName);
+                PrintView(printPage, currentMonth, day, shift, fileName);
             }
         }
 
 
 
-        public static void CreateXLSX(string fileName, int day)
+        public static void CreateXLSX(string fileName, int month,  int day)
         {
             Workbook wb = Workbook.Load("szolgalatilap.xlsx");
             // Console.WriteLine(wb.CurrentWorksheet.SheetName);
@@ -111,7 +108,7 @@ namespace Szolgalati2
             s.CurrentBorder.RightStyle = Border.StyleValue.thin;
             s.CurrentBorder.TopStyle = Border.StyleValue.thin;
 
-            string date = "Dátum: " + FormatDate(Month) + "." + FormatDate(day) + ".";
+            string date = "Dátum: " + FormatDate(month) + "." + FormatDate(day) + ".";
             wb.CurrentWorksheet.AddCell(date, 1, 0, s);
             wb.CurrentWorksheet.AddCell(date, 4, 0, s);
             wb.CurrentWorksheet.AddCell(date, 1, 17, s);
