@@ -27,9 +27,17 @@ namespace Szolgalati2
 
             // DisplayEmployers();
 
+
+
             // DisplayEmployersOfTheDay();
 
+
+
+            // param_1: start day
+            // param_2: selected month
+            // param_3: number of pages
             CreateServiceSheets(21, 5, 2);
+
 
 
             Console.ReadKey();
@@ -54,7 +62,7 @@ namespace Szolgalati2
             {
                 ServicePhones = GetServicePhones();
                 EmployersOfTheDay = GetEmployersOfTheDay(day.ToString(), shift);
-                CreateXLSX(fileName, month, day);
+                CreateXLSX(fileName + (i + 1), month, day);
                 Console.WriteLine("File Created {0}", fileName);
             }
         }
