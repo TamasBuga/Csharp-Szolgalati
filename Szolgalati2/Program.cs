@@ -62,7 +62,7 @@ namespace Szolgalati2
             {
                 ServicePhones = GetServicePhones();
                 EmployersOfTheDay = GetEmployersOfTheDay(day.ToString(), shift);
-                CreateXLSX(fileName + (i + 1), month, day);
+                CreateXLSX(fileName + "_" + (i + 1), month, day);
                 Console.WriteLine("File Created {0}", fileName);
             }
         }
