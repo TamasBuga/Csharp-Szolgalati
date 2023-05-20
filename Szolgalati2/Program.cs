@@ -19,7 +19,7 @@ namespace Szolgalati2
         public static string Shift = "7-19";
         public static List<Employer> Employers = GetEmployers();
         public static List<string> ServicePhones = GetServicePhones();
-        public static List<string> EmployersOfTheDay = GetEmployersOfTheDay(Day.ToString(), Shift);
+        public static List<string> EmployersOfTheDay = new List<string>();
 
 
 
@@ -57,7 +57,7 @@ namespace Szolgalati2
             {
                 ServicePhones = GetServicePhones();
                 EmployersOfTheDay = GetEmployersOfTheDay(day.ToString(), shift);
-                CreateXLSX(fileName);
+                CreateXLSX(fileName, day);
                 Console.WriteLine("File Created {0}", fileName);
             }
         }
@@ -97,7 +97,7 @@ namespace Szolgalati2
 
 
 
-        public static void CreateXLSX(string fileName)
+        public static void CreateXLSX(string fileName, int day)
         {
             Workbook wb = Workbook.Load("szolgalatilap.xlsx");
             // Console.WriteLine(wb.CurrentWorksheet.SheetName);
@@ -111,7 +111,7 @@ namespace Szolgalati2
             s.CurrentBorder.RightStyle = Border.StyleValue.thin;
             s.CurrentBorder.TopStyle = Border.StyleValue.thin;
 
-            string date = "Dátum: " + FormatDate(Month) + "." + FormatDate(Day) + ".";
+            string date = "Dátum: " + FormatDate(Month) + "." + FormatDate(day) + ".";
             wb.CurrentWorksheet.AddCell(date, 1, 0, s);
             wb.CurrentWorksheet.AddCell(date, 4, 0, s);
             wb.CurrentWorksheet.AddCell(date, 1, 17, s);
@@ -182,7 +182,7 @@ namespace Szolgalati2
 
             }
 
-            wb.SaveAs("szolglap" + fileName + ".xlsx");
+            wb.SaveAs(fileName + ".xlsx");
             
         }
 
