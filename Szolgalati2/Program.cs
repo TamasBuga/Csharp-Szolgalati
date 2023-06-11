@@ -17,7 +17,9 @@ namespace Szolgalati2
         public static List<Employer> Employers = GetEmployers();
         public static List<string> ServicePhones = GetServicePhones();
         public static List<string> EmployersOfTheDay = new List<string>();
-
+        public static int inputDay = 1;
+        public static int inputMonth = 1;
+        public static int inputYear = 2023;
 
 
 
@@ -32,11 +34,13 @@ namespace Szolgalati2
             // DisplayEmployersOfTheDay();
 
 
+            UserInput();
+
 
             // param_1: start day
             // param_2: selected month
             // param_3: number of pages
-            CreateServiceSheets(21, 5, 1);
+            CreateServiceSheets(inputDay, inputMonth, 1);
 
 
 
@@ -56,6 +60,24 @@ namespace Szolgalati2
         // =====================================================================
 
 
+        public static void UserInput()
+        {
+            Console.WriteLine("Adja meg az évet:");
+            string year = Console.ReadLine();
+
+            Console.WriteLine("Adja meg a hónapot:");
+            string month = Console.ReadLine();
+
+            Console.WriteLine("Adja meg a napot:");
+            string day = Console.ReadLine();
+
+            inputYear = Convert.ToInt32(year);
+            inputMonth = Convert.ToInt32(month);
+            inputDay = Convert.ToInt32(day);
+        }
+
+
+
         public static void PrintView(int page, int month, int day, string shift, string fileName)
         {
             for(int i = 0; i < page; i++)
@@ -70,10 +92,10 @@ namespace Szolgalati2
 
         public static void CreateServiceSheets(int startDay, int currentMonth, int printPage)
         {
-            int monthLeght = DateTime.DaysInMonth(2023, 5);
+            int monthLeght = DateTime.DaysInMonth(inputYear, currentMonth);
             int day = 0;
             string shift = "";
-            string month = "05.";
+            string month = "06.";
             string fileName = "";
 
             startDay--;
@@ -359,7 +381,7 @@ namespace Szolgalati2
 
         public static List<Employer> GetEmployers()
         {
-            StreamReader reader = new StreamReader("betegkiserok.csv");
+            StreamReader reader = new StreamReader("betegkiserok2.csv");
             List<Employer> emps = new List<Employer>();
 
             try
